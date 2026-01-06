@@ -15,58 +15,59 @@
       margin: 0;
       width: 100%;
       height: 100%;
-      background: #000;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
     }
 
-    /* 좌우 확장 배경 (포스터 블러) */
-    .bg-blur {
+    /* 전체 화면 블러 배경 */
+    body::before {
+      content: "";
       position: fixed;
       inset: 0;
       background: url("poster.jpg") center / cover no-repeat;
-      filter: blur(32px);
-      transform: scale(1.1);
-      z-index: -3;
+      filter: blur(40px);
+      transform: scale(1.15);
+      z-index: -2;
     }
 
-    /* 중앙 무대 */
+    /* 어두운 톤 보정 (블러가 너무 튀는 것 방지) */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: -1;
+    }
+
+    /* 중앙 포스터 영역 */
     .stage {
       position: relative;
       width: 100%;
       max-width: 480px;
       height: 100vh;
       margin: 0 auto;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* stage 내부 여백 채우기 */
-    .stage-blur {
-      position: absolute;
-      inset: 0;
-      background: url("poster.jpg") center / cover no-repeat;
-      filter: blur(20px);
-      transform: scale(1.1);
-      z-index: 0;
-    }
-    
-    /* 실제 포스터 (절대 안 짤리게) */
+    /* 포스터 (절대 안 짤림) */
     .poster {
-      position: relative;
-      z-index: 1;
       width: 100%;
       height: 100%;
       background: url("poster.jpg") center / contain no-repeat;
     }
 
-    /* 하단 가독성용 그라데이션 */
+    /* 하단 가독성 그라데이션 */
     .overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to bottom,
         rgba(0,0,0,0) 55%,
-        rgba(0,0,0,0.65) 100%
+        rgba(0,0,0,0.6) 100%
       );
-      z-index: 2;
+      pointer-events: none;
     }
 
     /* CTA 버튼 */
@@ -75,14 +76,14 @@
       bottom: calc(32px + env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%);
-      z-index: 3;
+      z-index: 10;
     }
 
     .cta a {
       display: inline-block;
-      padding: 14px 32px;
+      padding: 14px 34px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.95);
       color: #000;
       text-decoration: none;
       font-size: 15px;
@@ -105,10 +106,7 @@
 </head>
 <body>
 
-  <div class="bg-blur"></div>
-
   <div class="stage">
-    <div class="stage-blur"></div>
     <div class="poster"></div>
     <div class="overlay"></div>
 
