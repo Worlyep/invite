@@ -15,7 +15,6 @@
       margin: 0;
       width: 100%;
       height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       background: #000;
     }
 
@@ -26,7 +25,7 @@
       background: url("poster.jpg") center / cover no-repeat;
       filter: blur(32px);
       transform: scale(1.1);
-      z-index: -2;
+      z-index: -3;
     }
 
     /* 중앙 무대 */
@@ -36,13 +35,23 @@
       max-width: 480px;
       height: 100vh;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
     }
 
+    /* stage 내부 여백 채우기 */
+    .stage-blur {
+      position: absolute;
+      inset: 0;
+      background: url("poster.jpg") center / cover no-repeat;
+      filter: blur(20px);
+      transform: scale(1.1);
+      z-index: 0;
+    }
+    
     /* 실제 포스터 (절대 안 짤리게) */
     .poster {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
       background: url("poster.jpg") center / contain no-repeat;
@@ -57,7 +66,7 @@
         rgba(0,0,0,0) 55%,
         rgba(0,0,0,0.65) 100%
       );
-      pointer-events: none;
+      z-index: 2;
     }
 
     /* CTA 버튼 */
@@ -66,7 +75,7 @@
       bottom: calc(32px + env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%);
-      z-index: 10;
+      z-index: 3;
     }
 
     .cta a {
@@ -99,6 +108,7 @@
   <div class="bg-blur"></div>
 
   <div class="stage">
+    <div class="stage-blur"></div>
     <div class="poster"></div>
     <div class="overlay"></div>
 
